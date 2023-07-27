@@ -38,6 +38,7 @@ dependencies:
   pedometer: ^4.0.1
   geolocator: ^8.0.1
   alxgration_speedometer: ^0.0.2
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

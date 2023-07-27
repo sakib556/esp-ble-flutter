@@ -4,6 +4,7 @@ import 'package:ble_app/ble_data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class BleData extends StatefulWidget {
   const BleData({super.key});
@@ -17,14 +18,13 @@ class _BleDataState extends State<BleData> {
   BluetoothDevice? device;
   BluetoothCharacteristic? rxCharacteristic;
   BluetoothCharacteristic? txCharacteristic;
-  TextEditingController _textEditingController = TextEditingController();
   String _message = "";
   bool isError = false;
   bool isLoading = false;
   @override
   void initState() {
     super.initState();
-    connectToDevice();
+    initBLE();
   }
 
   @override
@@ -46,11 +46,36 @@ class _BleDataState extends State<BleData> {
     setState(() {});
   }
 
+  void initBLE() async {
+    loading(true);
+    final isOn = await FlutterBluePlus.isOn;
+    if (isOn) {
+      print("On ble");
+      await connectToDevice();
+    } else {
+      print("Off ble");
+      EasyLoading.showError("Please turn on your bluetooth !!");
+      error();
+    }
+  }
+
   BleDataModel? bleData;
+
   Future<void> connectToDevice() async {
     // Scan for available devices
     try {
-      loading(true);
+      if (FlutterBluePlus.isScanningNow) {
+        await FlutterBluePlus.stopScan();
+      }
+      final connectDevices = await FlutterBluePlus.connectedSystemDevices;
+      if (connectDevices.isNotEmpty) {
+        for (var dev in connectDevices) {
+          if (dev.localName == "ESP BLE") {
+            await dev.disconnect();
+            break;
+          }
+        }
+      }
       List<ScanResult> scanResults =
           await FlutterBluePlus.startScan(timeout: const Duration(seconds: 4));
       // await flutterBlue.startScan(timeout: const Duration(seconds: 4));
@@ -91,9 +116,6 @@ class _BleDataState extends State<BleData> {
                   setState(() {});
                 }
               });
-            } else {
-              print("Error 2");
-              error();
             }
 
             // Check if the characteristic UUID matches the transmitting characteristic
@@ -103,6 +125,9 @@ class _BleDataState extends State<BleData> {
             // }
           }
         }
+      } else {
+        EasyLoading.showError("ESP BLE not found !");
+        error();
       }
     } on Exception catch (e) {
       print("Error catch");
@@ -178,12 +203,12 @@ class _BleDataState extends State<BleData> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Reload"),
+              Text("Refresh"),
               IconButton(
                   onPressed: () {
-                    connectToDevice();
+                    initBLE();
                   },
-                  icon: Icon(Icons.replay)),
+                  icon: Icon(Icons.refresh)),
             ],
           ),
           SizedBox(
@@ -202,7 +227,7 @@ class _BleDataState extends State<BleData> {
         children: [
           IconButton(
               onPressed: () {
-                connectToDevice();
+                initBLE();
               },
               icon: Icon(Icons.replay)),
           SizedBox(

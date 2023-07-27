@@ -9,16 +9,16 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("BLE Data & Speedometer"),
+        title: const Text("BLE Data & Speedometer"),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20.0),
+      body: const SingleChildScrollView(
+        padding: EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Accelerometer data card
-            const WalkingSpeedScreen(),
-            const SizedBox(height: 16),
+            WalkingSpeedScreen(),
+            SizedBox(height: 16),
             BleData()
           ],
         ),
