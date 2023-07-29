@@ -171,16 +171,23 @@ class _BleDataState extends State<BleData> {
         const SizedBox(height: 16),
         // Sensor 3 data card
         SensorCard(
-          icon: Icons.sensor_window,
-          title: 'Sensor 3',
-          data: '${bleData!.sensor3Data}',
+          icon: Icons.signal_cellular_alt_rounded,
+          title: 'Signal Strength',
+          data: '${bleData!.signalStrength}',
         ),
         const SizedBox(height: 16),
         // Sensor 4 data card
         SensorCard(
-          icon: Icons.sensor_door,
-          title: 'Sensor 4',
-          data: '${bleData!.sensor4Data}',
+          icon: Icons.phone_iphone_sharp,
+          title: 'IMU-Accelerometer',
+          data:
+              'X: ${bleData!.imuAccX}\nY: ${bleData!.imuAccY}\nZ: ${bleData!.imuAccZ}',
+        ),
+        SensorCard(
+          icon: Icons.phone_android_outlined,
+          title: 'IMU-Gyroscope',
+          data:
+              'X: ${bleData!.imuGyrX}\nY: ${bleData!.imuGyrY}\nZ: ${bleData!.imuGyrZ}',
         ),
       ],
     );
