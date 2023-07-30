@@ -1,8 +1,7 @@
+import 'dart:async';
 import 'dart:convert';
-
 import 'package:ble_app/ble_data_model.dart';
 import 'package:flutter/material.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
@@ -155,20 +154,6 @@ class _BleDataState extends State<BleData> {
   Widget _loadedData() {
     return Column(
       children: [
-        SensorCard(
-          icon: Icons.speed,
-          title: 'Accelerometer',
-          data: 'Z: ${bleData!.accelerometer}',
-        ),
-        const SizedBox(height: 16),
-        // Gyroscope data card
-        SensorCard(
-          icon: Icons.gas_meter,
-          title: 'Gyroscope',
-          data:
-              'X: ${bleData!.gyroscopeX}\nY: ${bleData!.gyroscopeY}\nZ: ${bleData!.gyroscopeZ}',
-        ),
-        const SizedBox(height: 16),
         // Sensor 3 data card
         SensorCard(
           icon: Icons.signal_cellular_alt_rounded,
@@ -178,16 +163,16 @@ class _BleDataState extends State<BleData> {
         const SizedBox(height: 16),
         // Sensor 4 data card
         SensorCard(
-          icon: Icons.phone_iphone_sharp,
-          title: 'IMU-Accelerometer',
+          icon: Icons.directions,
+          title: 'IoT-Accelerometer',
           data:
-              'X: ${bleData!.imuAccX}\nY: ${bleData!.imuAccY}\nZ: ${bleData!.imuAccZ}',
+              'X: ${bleData!.iotAccX}\nY: ${bleData!.iotAccY}\nZ: ${bleData!.iotAccZ}',
         ),
         SensorCard(
-          icon: Icons.phone_android_outlined,
-          title: 'IMU-Gyroscope',
+          icon: Icons.rotate_90_degrees_ccw,
+          title: 'IoT-Gyroscope',
           data:
-              'X: ${bleData!.imuGyrX}\nY: ${bleData!.imuGyrY}\nZ: ${bleData!.imuGyrZ}',
+              'X: ${bleData!.iotGyrX}\nY: ${bleData!.iotGyrY}\nZ: ${bleData!.iotGyrZ}',
         ),
       ],
     );
@@ -304,12 +289,16 @@ class SensorCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
-                      child: AnimatedTextKit(
-                        animatedTexts: [
-                          TypewriterAnimatedText(data,
-                              textStyle: const TextStyle(color: Colors.black)),
-                        ],
-                      ),
+                      child: Text(data,
+                          style: const TextStyle(color: Colors.black)),
+                      // AnimatedTextKit(
+                      //   totalRepeatCount: 0,
+                      //   repeatForever: true,
+                      //   animatedTexts: [
+                      //     TypewriterAnimatedText(data,
+                      //         textStyle: const TextStyle(color: Colors.black)),
+                      //   ],
+                      // ),
                     ),
                   ),
                 ],

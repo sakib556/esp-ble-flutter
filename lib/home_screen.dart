@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:ble_app/ble_data.dart';
+import 'package:ble_app/mobile_sensors.dart';
 import 'package:ble_app/speedometer.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +22,9 @@ class HomeScreen extends StatelessWidget {
             // Accelerometer data card
             WalkingSpeedScreen(),
             SizedBox(height: 16),
-            BleData()
+            MobileSensors(),
+            SizedBox(height: 16),
+            BleData(),
           ],
         ),
       ),
