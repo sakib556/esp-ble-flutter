@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:ble_app/ble_data.dart';
 import 'package:ble_app/mobile_sensors.dart';
 import 'package:ble_app/speedometer.dart';

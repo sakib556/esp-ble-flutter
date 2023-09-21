@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:ble_app/ble_data.dart';
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
