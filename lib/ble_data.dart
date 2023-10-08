@@ -81,16 +81,18 @@ class _BleDataState extends State<BleData> {
 
       // Find the device with the desired name ("LIDAR")
       for (ScanResult result in scanResults) {
+        print("device name : ${result.device.localName} ........");
         if (result.device.localName == "ESP BLE") {
           device = result.device;
           break;
         }
       }
-
       // Connect to the device
       if (device != null) {
+        print("device find");
         await device!.connect();
         print("requesting......");
+        print("discovered......");
         await device!.requestMtu(517);
         print("requested........");
         // Discover services and characteristics
